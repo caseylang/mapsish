@@ -1,0 +1,6 @@
+_site
+_todo
+.ruby-gemset
+.ruby-version
+*.sublime-project
+*.sublime-workspace
