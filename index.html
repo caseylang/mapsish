@@ -16,7 +16,7 @@
 
 </head>
 <body>
-  <nav class="top-bar">
+  <header class="top-bar">
     <ul class="title-area">
       <li class="name">
         <h1><a href="#">Mapish</a></h1>
@@ -29,7 +29,90 @@
         <li><a href="#"><img src="../images/pogo_avatar.jpg" alt="avatar" class="center"></a></li>
       </ul>
     </section>
-  </nav>
+  </header>
+
+  <section class="ac-container">
+    <div>
+      <input id="ac-1" name="accordion" type="radio" checked/>
+      <label for="ac-1">
+        <form>
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <div class="row">
+                <div class="small-6 columns">
+                  <input type="text" value="Home" placeholder="Name" class="line">
+                </div>
+                <div class="small-6 columns">
+                  <input type="text" value="123 Main St., New York City, NY" placeholder="Address" class="line">
+                </div>
+              </div>
+            </div>
+            <div class="small-2 columns">
+              <a href="#" class="postfix button small alert">Delete</a>
+            </div>
+          </div>
+        </form>
+      </label>
+      <div class="map">
+        <div class="row">
+          <div class="small-10 small-centered columns">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7Clabel:G%7C40.711614,-74.012318&sensor=false" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <input id="ac-2" name="accordion" type="radio" />
+      <label for="ac-2">
+        <form>
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <div class="row">
+                <div class="small-6 columns">
+                  <input type="text" value="Work" placeholder="Name" class="line">
+                </div>
+                <div class="small-6 columns">
+                  <input type="text" value="567 1st St., New York City, NY" placeholder="Address" class="line">
+                </div>
+              </div>
+            </div>
+            <div class="small-2 columns">
+              <a href="#" class="postfix button small alert">Delete</a>
+            </div>
+          </div>
+        </form>
+      </label>
+      <div class="map">
+        <div class="row">
+          <div class="small-10 small-centered columns">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <input id="ac-new" name="accordion" type="radio" />
+      <label for="ac-new">
+        <form>
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <div class="row">
+                <div class="small-6 columns">
+                  <input type="text" placeholder="Name" class="line">
+                </div>
+                <div class="small-6 columns">
+                  <input type="text" placeholder="Address" class="line">
+                </div>
+              </div>
+            </div>
+            <div class="small-2 columns">
+              <a href="#" class="postfix button small">Add</a>
+            </div>
+          </div>
+        </form>
+      </label>
+    </div>
+  </section>
 
   <script>
   document.write('<script src=' +
@@ -51,19 +134,11 @@
 
 	<script src="javascripts/foundation/foundation.interchange.js"></script>
 
-	<script src="javascripts/foundation/foundation.joyride.js"></script>
-
-	<script src="javascripts/foundation/foundation.magellan.js"></script>
-
-	<script src="javascripts/foundation/foundation.orbit.js"></script>
-
 	<script src="javascripts/foundation/foundation.placeholder.js"></script>
 
 	<script src="javascripts/foundation/foundation.reveal.js"></script>
 
 	<script src="javascripts/foundation/foundation.section.js"></script>
-
-	<script src="javascripts/foundation/foundation.tooltips.js"></script>
 
 	<script src="javascripts/foundation/foundation.topbar.js"></script>
 
