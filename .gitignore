@@ -1,5 +1,6 @@
 _site
 _todo
+todo.txt
 .ruby-gemset
 .ruby-version
 *.sublime-project
