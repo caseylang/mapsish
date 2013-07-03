@@ -29,4 +29,24 @@ describe 'Mapish' do
       body['locations'].length.should == 1
     end
   end
+
+  describe 'post /api/locations' do
+    it 'creates a new location' do
+      post '/api/locations', {name: 'Work', address: '1234 1st St. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+      last_response.should be_ok
+      Location.count.should > 0
+    end
+  end
+
+  describe 'get /api/locations/:id' do
+    pending
+  end
+
+  describe 'put /api/locations/:id' do
+    pending
+  end
+
+  describe 'delete /api/locations/:id' do
+    pending
+  end
 end

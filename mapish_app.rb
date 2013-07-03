@@ -27,8 +27,15 @@ namespace '/api' do
   get('/?') { redirect to '/api/locations'}
 
   get '/locations/?' do
-    @locations = Location.all
-    json({ locations: @locations })
+    locations = Location.all
+    json({ locations: locations })
+  end
+
+  post '/locations' do
+    request.body.rewind
+    data = JSON.parse request.body.read
+    location = Location.create(name: data['name'], address: data['address'])
+    json({location: location})
   end
 end
 
