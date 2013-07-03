@@ -1,8 +1,10 @@
 require 'spec_helper'
+require 'pry'
 
 # todo: move all this sample data
-describe 'Mapish' do
+describe 'Mapish routes' do
   let(:location) { Location.create(name: 'Work', address: '1234 1st St. Anywhere, State') }
+  let(:response_body) { JSON.parse(last_response.body) }
 
   # todo: nuke this once things are really up and running
   describe 'get /' do
@@ -26,47 +28,71 @@ describe 'Mapish' do
 
     it 'returns all locations' do
       Location.create(name: 'Work', address: '1234 1st St. Anywhere, State')
-      body = JSON.parse(response.body)
-      body.keys.should include 'locations'
-      body['locations'].should be_a Array
-      body['locations'].length.should == 1
+      response.should be_ok
+      response_body.keys.should include 'locations'
+      response_body['locations'].should be_a Array
+      response_body['locations'].length.should == 1
     end
   end
 
-  describe 'post /api/locations' do
+  describe 'put /api/locations' do
     it 'creates a new location' do
-      post '/api/locations', {name: 'Work', address: '1234 1st St. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+      put '/api/locations', {name: 'Work', address: '1234 1st St. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should > 0
+      response_body['errors'].empty?.should be true
     end
+    pending 'invalid data'
   end
 
   describe 'get /api/locations/:id' do
     it 'returns the specified location' do
       get "/api/locations/#{location.id}"
       last_response.should be_ok
-      body = JSON.parse(last_response.body)
-      body['location']['name'].should match 'Work'
+      response_body['locations'][0]['name'].should match 'Work'
+      response_body['errors'].empty?.should be true
+    end
+
+    context 'when given an invalid id' do
+      it 'returns an error' do
+        get "/api/locations/999"
+        response_body['errors'].empty?.should be false
+      end
     end
   end
 
-  describe 'put /api/locations/:id' do
-    it 'creates an existing location' do
+  describe 'post /api/locations/:id' do
+    it 'updates an existing location' do
       post "/api/locations/#{location.id}", {name: 'Home', address: '1234 Main Rd. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
-      body = JSON.parse(last_response.body)
       Location.count.should == 1
-      body['location']['name'].should match 'Home'
+      response_body['locations'][0]['name'].should match 'Home'
+      response_body['errors'].empty?.should be true
     end
+
+    context 'when given an invalid id' do
+      it 'returns an error' do
+        post "/api/locations/999", {name: 'Home', address: '1234 Main Rd. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+        response_body['errors'].empty?.should be false
+      end
+    end
+
+    pending 'invalid data'
   end
 
   describe 'delete /api/locations/:id' do
     it 'deletes an existing location' do
       delete "/api/locations/#{location.id}"
       last_response.should be_ok
-      # body = JSON.parse(last_response.body)
       Location.count.should == 0
-      # body['location']['name'].should match 'Home'
+    end
+
+    context 'when given an invalid id' do
+      it 'returns an error' do
+        delete "/api/locations/999"
+        response_body.keys.should include 'errors'
+        response_body['errors'].empty?.should be false
+      end
     end
   end
 end

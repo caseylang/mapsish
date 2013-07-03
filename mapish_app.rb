@@ -25,38 +25,62 @@ get '/' do
 end
 
 namespace '/api' do
+  before do
+    @locations = []
+    @errors = []
+  end
+
   get('/?') { redirect to '/api/locations'}
 
   get '/locations/?' do
-    locations = Location.all
-    json({ locations: locations })
+    @locations = Location.all
+    respond
   end
 
-  post '/locations' do
+  put '/locations' do
     data = grab_data
-    location = Location.create(name: data['name'], address: data['address'])
-    json({ location: location })
+    @locations << Location.create(name: data['name'], address: data['address'])
+    respond
   end
 
   get '/locations/:id' do
     location = Location.get params[:id]
-    json({ location: location })
+    @errors << RECORD_NOT_FOUND_MSG unless location
+    @locations << location
+    respond
   end
 
   post '/locations/:id' do
     data = grab_data
     location = Location.get params[:id]
-    location.update(name: data['name'], address: data['address'])
-    json({ location: location })
+    if location
+      location.update(name: data['name'], address: data['address'])
+      @locations << location
+    else
+      @errors << RECORD_NOT_FOUND_MSG
+    end
+
+    respond
   end
 
   delete '/locations/:id' do
     location = Location.get params[:id]
-    location.destroy
+    if location
+      location.destroy
+    else
+      @errors << RECORD_NOT_FOUND_MSG
+    end
+    respond
   end
 end
+
+RECORD_NOT_FOUND_MSG = 'Location record was not found.'
 
 def grab_data
   request.body.rewind
   JSON.parse request.body.read
+end
+
+def respond
+  json({locations: @locations, errors: @errors})
 end
