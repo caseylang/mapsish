@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-# todo: nuke both of these once things are really up and running
 describe 'Mapish' do
+  # todo: nuke this once things are really up and running
   describe 'get /' do
     it 'should display the index' do
       get '/'
@@ -39,7 +39,14 @@ describe 'Mapish' do
   end
 
   describe 'get /api/locations/:id' do
-    pending
+    let(:location) { Location.create(name: 'Work', address: '1234 1st St. Anywhere, State') }
+
+    it 'returns the specified location' do
+      get "/api/locations/#{location.id}"
+      last_response.should be_ok
+      body = JSON.parse(last_response.body)
+      body['location']['name'].should match 'Work'
+    end
   end
 
   describe 'put /api/locations/:id' do
