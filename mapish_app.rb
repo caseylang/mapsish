@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'sinatra/json'
-require "sinatra/namespace"
+require 'sinatra/namespace'
 require 'pry'
 
 configure do
@@ -10,11 +10,18 @@ end
 
 class Location
   include DataMapper::Resource
+
+  before :save, :geocode
+
   property :id, Serial
-  property :name, String
-  property :address, String
-  # property :latitude, Float
-  # property :longitude, Float
+  property :name, String, required: true
+  property :address, String, required: true
+  property :latitude, Float, :writer => :private
+  property :longitude, Float, :writer => :private
+
+  def geocode
+    @latitude, @longitude = Geocoder.coordinates @address
+  end
 end
 
 DataMapper.finalize

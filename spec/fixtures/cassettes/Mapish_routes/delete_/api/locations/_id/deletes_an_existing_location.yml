@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=800%20Market%20St.%20San%20Francisco,%20CA%2094102&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 03 Jul 2013 21:41:05 GMT
+      Expires:
+      - Thu, 04 Jul 2013 21:41:05 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: US-ASCII
+      string: ! "{\n   \"results\" : [\n      {\n         \"address_components\" :
+        [\n            {\n               \"long_name\" : \"800\",\n               \"short_name\"
+        : \"800\",\n               \"types\" : [ \"street_number\" ]\n            },\n
+        \           {\n               \"long_name\" : \"Market Street\",\n               \"short_name\"
+        : \"Market St\",\n               \"types\" : [ \"route\" ]\n            },\n
+        \           {\n               \"long_name\" : \"Civic Center\",\n               \"short_name\"
+        : \"Civic Center\",\n               \"types\" : [ \"neighborhood\", \"political\"
+        ]\n            },\n            {\n               \"long_name\" : \"San Francisco\",\n
+        \              \"short_name\" : \"SF\",\n               \"types\" : [ \"locality\",
+        \"political\" ]\n            },\n            {\n               \"long_name\"
+        : \"San Francisco\",\n               \"short_name\" : \"San Francisco\",\n
+        \              \"types\" : [ \"administrative_area_level_2\", \"political\"
+        ]\n            },\n            {\n               \"long_name\" : \"California\",\n
+        \              \"short_name\" : \"CA\",\n               \"types\" : [ \"administrative_area_level_1\",
+        \"political\" ]\n            },\n            {\n               \"long_name\"
+        : \"United States\",\n               \"short_name\" : \"US\",\n               \"types\"
+        : [ \"country\", \"political\" ]\n            },\n            {\n               \"long_name\"
+        : \"94102\",\n               \"short_name\" : \"94102\",\n               \"types\"
+        : [ \"postal_code\" ]\n            }\n         ],\n         \"formatted_address\"
+        : \"800 Market Street, San Francisco, CA 94102, USA\",\n         \"geometry\"
+        : {\n            \"location\" : {\n               \"lat\" : 37.78546990,\n
+        \              \"lng\" : -122.4066160\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : {\n               \"northeast\"
+        : {\n                  \"lat\" : 37.78681888029149,\n                  \"lng\"
+        : -122.4052670197085\n               },\n               \"southwest\" : {\n
+        \                 \"lat\" : 37.78412091970849,\n                  \"lng\"
+        : -122.4079649802915\n               }\n            }\n         },\n         \"types\"
+        : [ \"street_address\" ]\n      }\n   ],\n   \"status\" : \"OK\"\n}\n"
+    http_version: 
+  recorded_at: Wed, 03 Jul 2013 21:41:05 GMT
+recorded_with: VCR 2.5.0

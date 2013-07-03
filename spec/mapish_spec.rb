@@ -25,7 +25,7 @@ describe 'Mapish routes' do
       response.content_type.should =~ /json/
     end
 
-    it 'returns all locations' do
+    it 'returns all locations', :vcr do
       location
       response.should be_ok
       response_body.keys.should include 'locations'
@@ -35,7 +35,7 @@ describe 'Mapish routes' do
   end
 
   describe 'put /api/locations' do
-    it 'creates a new location' do
+    it 'creates a new location', :vcr do
       put '/api/locations', Locations.work.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should > 0
@@ -45,7 +45,7 @@ describe 'Mapish routes' do
   end
 
   describe 'get /api/locations/:id' do
-    it 'returns the specified location' do
+    it 'returns the specified location', :vcr do
       get "/api/locations/#{location.id}"
       last_response.should be_ok
       response_body['locations'][0]['name'].should match 'Work'
@@ -61,7 +61,7 @@ describe 'Mapish routes' do
   end
 
   describe 'post /api/locations/:id' do
-    it 'updates an existing location' do
+    it 'updates an existing location', :vcr do
       post "/api/locations/#{location.id}", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should == 1
@@ -80,7 +80,7 @@ describe 'Mapish routes' do
   end
 
   describe 'delete /api/locations/:id' do
-    it 'deletes an existing location' do
+    it 'deletes an existing location', :vcr do
       delete "/api/locations/#{location.id}"
       last_response.should be_ok
       Location.count.should == 0

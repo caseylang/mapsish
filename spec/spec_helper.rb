@@ -21,6 +21,7 @@ RSpec.configure do |config|
   DataMapper.finalize
   Location.auto_upgrade!
 end
+
 def app
   Sinatra::Application
 end

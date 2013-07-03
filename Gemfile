@@ -6,6 +6,7 @@ gem 'sinatra-contrib'
 
 gem 'data_mapper'
 gem 'dm-postgres-adapter', group: :production
+gem 'geocoder'
 
 group :development do
   gem 'dm-sqlite-adapter'
