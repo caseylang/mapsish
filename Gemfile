@@ -21,5 +21,6 @@ end
 
 group :test do
   gem 'vcr'
+  gem 'database_cleaner'
   gem 'webmock'
 end

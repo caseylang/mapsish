@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/json'
+require "sinatra/namespace"
 
 configure do
   DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/development.sqlite3")
@@ -22,17 +23,13 @@ get '/' do
   'howdy!'
 end
 
-get '/location' do
-  @locations = Location.all
-  index = "<p><%= Location.all.count %></p>
-          <% @locations.each do |location| %>
-            <p><%= location.id %>:<%= location.name %> - <%= location.address %></p>
-          <% end %>"
-  erb index
-end
+namespace '/api' do
+  get('/?') { redirect to '/api/locations'}
 
-get '/json_test' do
-  json testing: 'Works!'
+  get '/locations/?' do
+    @locations = Location.all
+    json({ locations: @locations })
+  end
 end
 
 # get location/:id
