@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 # Required by the app directly
 gem 'sinatra', require: false
+gem 'sinatra-contrib'
+
 gem 'data_mapper'
 gem 'dm-postgres-adapter', group: :production
 

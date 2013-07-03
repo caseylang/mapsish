@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/json'
 
 configure do
   DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/development.sqlite3")
@@ -29,3 +30,12 @@ get '/location' do
           <% end %>"
   erb index
 end
+
+get '/json_test' do
+  json testing: 'Works!'
+end
+
+# get location/:id
+# post location/
+# put location/:id
+# delete location/:id
