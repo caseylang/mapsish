@@ -1,9 +1,8 @@
 require 'spec_helper'
 require 'pry'
 
-# todo: move all this sample data
 describe 'Mapish routes' do
-  let(:location) { Location.create(name: 'Work', address: '1234 1st St. Anywhere, State') }
+  let(:location) { Location.create(Locations.work) }
   let(:response_body) { JSON.parse(last_response.body) }
 
   # todo: nuke this once things are really up and running
@@ -27,7 +26,7 @@ describe 'Mapish routes' do
     end
 
     it 'returns all locations' do
-      Location.create(name: 'Work', address: '1234 1st St. Anywhere, State')
+      location
       response.should be_ok
       response_body.keys.should include 'locations'
       response_body['locations'].should be_a Array
@@ -37,7 +36,7 @@ describe 'Mapish routes' do
 
   describe 'put /api/locations' do
     it 'creates a new location' do
-      put '/api/locations', {name: 'Work', address: '1234 1st St. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+      put '/api/locations', Locations.work.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should > 0
       response_body['errors'].empty?.should be true
@@ -63,16 +62,16 @@ describe 'Mapish routes' do
 
   describe 'post /api/locations/:id' do
     it 'updates an existing location' do
-      post "/api/locations/#{location.id}", {name: 'Home', address: '1234 Main Rd. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+      post "/api/locations/#{location.id}", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should == 1
-      response_body['locations'][0]['name'].should match 'Home'
+      response_body['locations'][0]['name'].should match Locations.home[:name]
       response_body['errors'].empty?.should be true
     end
 
     context 'when given an invalid id' do
       it 'returns an error' do
-        post "/api/locations/999", {name: 'Home', address: '1234 Main Rd. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+        post "/api/locations/999", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
         response_body['errors'].empty?.should be false
       end
     end
