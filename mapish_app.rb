@@ -49,6 +49,11 @@ namespace '/api' do
     location.update(name: data['name'], address: data['address'])
     json({ location: location })
   end
+
+  delete '/locations/:id' do
+    location = Location.get params[:id]
+    location.destroy
+  end
 end
 
 def grab_data
