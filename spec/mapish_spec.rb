@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# todo: move all this sample data
 describe 'Mapish' do
   # todo: nuke this once things are really up and running
   describe 'get /' do
@@ -50,7 +51,15 @@ describe 'Mapish' do
   end
 
   describe 'put /api/locations/:id' do
-    pending
+    let(:location) { Location.create(name: 'Work', address: '1234 1st St. Anywhere, State') }
+
+    it 'creates an existing location' do
+      post "/api/locations/#{location.id}", {name: 'Home', address: '1234 Main Rd. Anywhere, State'}.to_json, "CONTENT_TYPE" => "application/json"
+      last_response.should be_ok
+      body = JSON.parse(last_response.body)
+      Location.count.should == 1
+      body['location']['name'].should match 'Home'
+    end
   end
 
   describe 'delete /api/locations/:id' do

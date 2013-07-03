@@ -33,14 +33,25 @@ namespace '/api' do
   end
 
   post '/locations' do
-    request.body.rewind
-    data = JSON.parse request.body.read
+    data = grab_data
     location = Location.create(name: data['name'], address: data['address'])
-    json({location: location})
+    json({ location: location })
   end
 
   get '/locations/:id' do
     location = Location.get params[:id]
-    json({location: location})
+    json({ location: location })
   end
+
+  post '/locations/:id' do
+    data = grab_data
+    location = Location.get params[:id]
+    location.update(name: data['name'], address: data['address'])
+    json({ location: location })
+  end
+end
+
+def grab_data
+  request.body.rewind
+  JSON.parse request.body.read
 end
