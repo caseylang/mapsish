@@ -6,6 +6,7 @@ require 'pry'
 configure do
   DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/development.sqlite3")
   DataMapper::Model.raise_on_save_failure = true
+  set :public_folder, File.dirname(__FILE__) + '/public'
 end
 
 class Location
@@ -28,7 +29,7 @@ DataMapper.finalize
 Location.auto_upgrade!
 
 get '/' do
-  'howdy!'
+  send_file File.join(settings.public_folder, 'index.html')
 end
 
 namespace '/api' do
