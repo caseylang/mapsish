@@ -1,7 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/json'
 require 'sinatra/namespace'
-require 'pry'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/development.sqlite3")
 DataMapper::Model.raise_on_save_failure = true
