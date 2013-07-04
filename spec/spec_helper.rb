@@ -7,7 +7,12 @@ require 'rspec'
 require 'rack/test'
 require 'json'
 
-set :environment, :test
+ENV['RACK_ENV'] = "test"
+
+module RSpecMixin
+  include Rack::Test::Methods
+  def app() Mapish end
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -16,12 +21,8 @@ require "#{Dir.pwd}/spec/fixtures/locations"
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
-
+  config.include RSpecMixin
   DataMapper.setup(:default, "sqlite3:///#{Dir.pwd}/test.sqlite3")
   DataMapper.finalize
   Location.auto_upgrade!
-end
-
-def app
-  Sinatra::Application
 end

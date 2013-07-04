@@ -3,7 +3,9 @@ window.Mapish =
   Collections: {}
   Views: {}
   Routers: {}
-  init: -> alert 'Howdy!'
+  init: ->
+    new Mapish.Routers.Locations()
+    Backbone.history.start()
 
 $(document).ready ->
   Mapish.init()

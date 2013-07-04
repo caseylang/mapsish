@@ -6,7 +6,8 @@
     Views: {},
     Routers: {},
     init: function() {
-      return alert('Howdy!');
+      new Mapish.Routers.Locations();
+      return Backbone.history.start();
     }
   };
 

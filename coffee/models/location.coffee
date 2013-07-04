@@ -1,0 +1,1 @@
+class Mapish.Models.Location extends Backbone.Model

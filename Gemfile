@@ -7,6 +7,7 @@ gem 'sinatra-contrib'
 gem 'data_mapper'
 gem 'dm-postgres-adapter', group: :production
 gem 'geocoder'
+gem 'sinatra-backbone', :require => 'sinatra/backbone'
 
 group :development do
   gem 'dm-sqlite-adapter'

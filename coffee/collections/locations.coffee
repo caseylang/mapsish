@@ -1,0 +1,1 @@
+class Mapish.Collections.Locations extends Backbone.Collection
