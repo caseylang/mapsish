@@ -19,7 +19,9 @@ describe 'Location', :vcr => {cassette_name: 'Location/coordinates'} do
         it('longitude') { location.longitude.should eq Locations.work_cordinates[:longitude] }
       end
     end
-  end
-  pending 'Name and Address are required'
 
+    context 'with invalid data' do
+      it { expect{ location = Location.create(Locations.empty) }.to raise_error DataMapper::SaveFailureError }
+    end
+  end
 end

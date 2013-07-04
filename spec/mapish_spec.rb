@@ -41,7 +41,13 @@ describe 'Mapish routes' do
       Location.count.should > 0
       response_body['errors'].empty?.should be true
     end
-    pending 'invalid data'
+
+    context 'with invalid data' do
+      it 'returns errors' do
+        put '/api/locations', Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
+        response_body.empty?.should be false
+      end
+    end
   end
 
   describe 'get /api/locations/:id' do
@@ -52,7 +58,7 @@ describe 'Mapish routes' do
       response_body['errors'].empty?.should be true
     end
 
-    context 'when given an invalid id' do
+    context 'with an invalid id' do
       it 'returns an error' do
         get "/api/locations/999"
         response_body['errors'].empty?.should be false
@@ -69,14 +75,19 @@ describe 'Mapish routes' do
       response_body['errors'].empty?.should be true
     end
 
-    context 'when given an invalid id' do
+    context 'with an invalid id' do
       it 'returns an error' do
         post "/api/locations/999", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
         response_body['errors'].empty?.should be false
       end
     end
 
-    pending 'invalid data'
+    context 'with invalid data' do
+      it 'returns errors', :vcr do
+        post "/api/locations/#{location.id}", Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
+        response_body.empty?.should be false
+      end
+    end
   end
 
   describe 'delete /api/locations/:id' do
@@ -86,7 +97,7 @@ describe 'Mapish routes' do
       Location.count.should == 0
     end
 
-    context 'when given an invalid id' do
+    context 'with an invalid id' do
       it 'returns an error' do
         delete "/api/locations/999"
         response_body.keys.should include 'errors'

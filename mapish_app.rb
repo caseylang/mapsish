@@ -14,8 +14,8 @@ class Location
   before :save, :geocode
 
   property :id, Serial
-  property :name, String, required: true
-  property :address, String, required: true
+  property :name, String, required: true, messages: { presence: "Name is required" }
+  property :address, String, required: true, messages: { presence: "Address is required" }
   property :latitude, Float, :writer => :private
   property :longitude, Float, :writer => :private
 
@@ -46,7 +46,13 @@ namespace '/api' do
 
   put '/locations' do
     data = grab_data
-    @locations << Location.create(name: data['name'], address: data['address'])
+    location = Location.new(name: data['name'], address: data['address'])
+    if location.valid?
+      location.save
+    else
+      location.errors.map {|error| @errors << error }
+    end
+    @locations << location
     respond
   end
 
@@ -61,12 +67,16 @@ namespace '/api' do
     data = grab_data
     location = Location.get params[:id]
     if location
-      location.update(name: data['name'], address: data['address'])
-      @locations << location
+      location.attributes = { name: data['name'], address: data['address'] }
+      if location.valid?
+        location.save
+      else
+        location.errors.map {|error| @errors << error }
+      end
     else
       @errors << RECORD_NOT_FOUND_MSG
     end
-
+    @locations << location
     respond
   end
 
