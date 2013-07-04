@@ -12,6 +12,8 @@
       return _ref;
     }
 
+    Location.prototype.urlRoot = '/api/locations';
+
     return Location;
 
   })(Backbone.Model);

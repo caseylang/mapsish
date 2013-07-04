@@ -4,7 +4,6 @@ class Mapish.Views.LocationsIndex extends Backbone.View
 
   events:
     'submit #new_location': 'createLocation'
-    'click #delete': 'deleteLocation'
 
   initialize: ->
     @collection.on('reset', @render, this)
@@ -16,10 +15,6 @@ class Mapish.Views.LocationsIndex extends Backbone.View
     this
 
   appendLocation: (location) ->
-    # if location.isNew()
-    #   location = location.get('locations')[0]
-    # else
-    #   location = location.toJSON()
     view = new Mapish.Views.Location(model: location)
     $('#locations').append(view.render().el)
 
@@ -33,15 +28,6 @@ class Mapish.Views.LocationsIndex extends Backbone.View
       wait: true
       success: -> $('#new_location')[0].reset()
       error: @handleError
-
-  deleteLocation: (event) ->
-    event.preventDefault()
-    id = event.currentTarget.value
-    console.log id
-    console.log @collection
-    l = @collection.findWhere({'id': id})
-    console.log l
-    # location.destroy
 
   handleError: (location, response) ->
     if response.status == 422

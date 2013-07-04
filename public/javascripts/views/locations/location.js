@@ -14,11 +14,22 @@
 
     Location.prototype.template = JST['locations/location'];
 
+    Location.prototype.events = {
+      'submit #new_location': 'createLocation',
+      'click a.delete': 'deleteLocation'
+    };
+
     Location.prototype.render = function() {
       $(this.el).html(this.template({
         location: this.model
       }));
       return this;
+    };
+
+    Location.prototype.deleteLocation = function() {
+      event.preventDefault();
+      $('#ac-' + this.model.get('id')).parent().remove();
+      return this.model.destroy();
     };
 
     return Location;

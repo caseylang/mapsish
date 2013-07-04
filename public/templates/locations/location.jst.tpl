@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="small-2 columns">
-        <button class="icon button small alert" id='delete' value='<%= location.get('id') %>'><i class="icon-trash"></i></a>
+        <a class="icon button small alert delete"><i class="icon-trash"></i></a>
       </div>
     </div>
   </form>

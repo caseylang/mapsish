@@ -15,8 +15,7 @@
     LocationsIndex.prototype.template = JST['locations/index'];
 
     LocationsIndex.prototype.events = {
-      'submit #new_location': 'createLocation',
-      'click #delete': 'deleteLocation'
+      'submit #new_location': 'createLocation'
     };
 
     LocationsIndex.prototype.initialize = function() {
@@ -55,18 +54,6 @@
         },
         error: this.handleError
       });
-    };
-
-    LocationsIndex.prototype.deleteLocation = function(event) {
-      var id, l;
-      event.preventDefault();
-      id = event.currentTarget.value;
-      console.log(id);
-      console.log(this.collection);
-      l = this.collection.findWhere({
-        'id': id
-      });
-      return console.log(l);
     };
 
     LocationsIndex.prototype.handleError = function(location, response) {
