@@ -61,6 +61,7 @@ class Mapish < Sinatra::Base
       if location.valid?
         location.save
       else
+        status 422
         location.errors.map {|error| @errors << error }
       end
       @locations << location
@@ -69,7 +70,10 @@ class Mapish < Sinatra::Base
 
     get '/locations/:id' do
       location = Location.get params[:id]
-      @errors << RECORD_NOT_FOUND_MSG unless location
+      unless location
+        status 404
+        @errors << RECORD_NOT_FOUND_MSG unless location
+      end
       @locations << location
       respond
     end
@@ -82,9 +86,11 @@ class Mapish < Sinatra::Base
         if location.valid?
           location.save
         else
+          status 422
           location.errors.map {|error| @errors << error }
         end
       else
+        status 404
         @errors << RECORD_NOT_FOUND_MSG
       end
       @locations << location
@@ -96,6 +102,7 @@ class Mapish < Sinatra::Base
       if location
         location.destroy
       else
+        status 404
         @errors << RECORD_NOT_FOUND_MSG
       end
       respond

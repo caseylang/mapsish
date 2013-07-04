@@ -36,6 +36,7 @@ describe 'Mapish routes' do
     context 'with invalid data' do
       it 'returns errors' do
         post '/api/locations', Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
+        last_response.status.should eq 422
         response_body.empty?.should be false
       end
     end
@@ -53,6 +54,7 @@ describe 'Mapish routes' do
     context 'with an invalid id' do
       it 'returns an error' do
         get "/api/locations/999"
+        last_response.status.should eq 404
         response_body['errors'].empty?.should be false
       end
     end
@@ -70,6 +72,7 @@ describe 'Mapish routes' do
     context 'with an invalid id' do
       it 'returns an error' do
         put "/api/locations/999", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
+        last_response.status.should eq 404
         response_body['errors'].empty?.should be false
       end
     end
@@ -77,6 +80,7 @@ describe 'Mapish routes' do
     context 'with invalid data' do
       it 'returns errors', :vcr do
         put "/api/locations/#{location.id}", Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
+        last_response.status.should eq 422
         response_body.empty?.should be false
       end
     end
@@ -92,6 +96,7 @@ describe 'Mapish routes' do
     context 'with an invalid id' do
       it 'returns an error' do
         delete "/api/locations/999"
+        last_response.status.should eq 404
         response_body.keys.should include 'errors'
         response_body['errors'].empty?.should be false
       end
