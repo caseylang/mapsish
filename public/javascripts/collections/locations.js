@@ -16,10 +16,6 @@
 
     Locations.prototype.model = Mapish.Models.Location;
 
-    Locations.prototype.parse = function(response) {
-      return response.locations;
-    };
-
     return Locations;
 
   })(Backbone.Collection);

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Mapish</title>
+
+  <link rel="stylesheet" href="stylesheets/app.css" />
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <script src="javascripts/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+  <header class="top-bar">
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="#">Mapish</a></h1>
+      </li>
+    </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="divider"></li>
+        <li><a href="#">Pogo</a></li>
+        <li><a href="#"><img src="../images/pogo_avatar.jpg" alt="avatar" class="center"></a></li>
+      </ul>
+    </section>
+  </header>
+
+  <section class="ac-container">
+    <div>
+      <input id="ac-1" name="accordion" type="radio" checked/>
+      <label for="ac-1">
+        <form>
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <div class="row">
+                <div class="small-6 columns">
+                  <input type="text" value="Home" placeholder="Name" class="line">
+                </div>
+                <div class="small-6 columns">
+                  <input type="text" value="123 Main St., New York City, NY" placeholder="Address" class="line">
+                </div>
+              </div>
+            </div>
+            <div class="small-2 columns">
+              <a href="#" class="icon button small alert"><i class="icon-trash"></i></a>
+            </div>
+          </div>
+        </form>
+      </label>
+      <div class="map">
+        <div class="row">
+          <div class="small-10 small-centered columns">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7Clabel:G%7C40.711614,-74.012318&sensor=false" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <input id="ac-2" name="accordion" type="radio" />
+      <label for="ac-2">
+        <form>
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <div class="row">
+                <div class="small-6 columns">
+                  <input type="text" value="Work" placeholder="Name" class="line">
+                </div>
+                <div class="small-6 columns">
+                  <input type="text" value="567 1st St., New York City, NY" placeholder="Address" class="line">
+                </div>
+              </div>
+            </div>
+            <div class="small-2 columns">
+              <a href="#" class="icon button small alert"><i class="icon-trash"></i></a>
+            </div>
+          </div>
+        </form>
+      </label>
+      <div class="map">
+        <div class="row">
+          <div class="small-10 small-centered columns">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <input id="ac-new" name="accordion" type="radio" />
+      <label for="ac-new">
+        <form>
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <div class="row">
+                <div class="small-6 columns">
+                  <input type="text" placeholder="Name" class="line">
+                </div>
+                <div class="small-6 columns">
+                  <input type="text" placeholder="Address" class="line">
+                </div>
+              </div>
+            </div>
+            <div class="small-2 columns">
+              <a href="#" class="icon button small success"><i class="icon-plus"></i></a>
+            </div>
+          </div>
+        </form>
+      </label>
+    </div>
+  </section>
+
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+
+  <script src="javascripts/foundation/foundation.js"></script>
+
+	<script src="javascripts/foundation/foundation.alerts.js"></script>
+
+	<script src="javascripts/foundation/foundation.clearing.js"></script>
+
+	<script src="javascripts/foundation/foundation.cookie.js"></script>
+
+	<script src="javascripts/foundation/foundation.dropdown.js"></script>
+
+	<script src="javascripts/foundation/foundation.forms.js"></script>
+
+	<script src="javascripts/foundation/foundation.interchange.js"></script>
+
+	<script src="javascripts/foundation/foundation.placeholder.js"></script>
+
+	<script src="javascripts/foundation/foundation.reveal.js"></script>
+
+	<script src="javascripts/foundation/foundation.section.js"></script>
+
+	<script src="javascripts/foundation/foundation.topbar.js"></script>
+
+
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>

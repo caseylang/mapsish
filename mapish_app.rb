@@ -13,8 +13,8 @@ class Location
   before :save, :geocode
 
   property :id, Serial
-  property :name, String, required: true, messages: { presence: "Name is required" }
-  property :address, String, required: true, messages: { presence: "Address is required" }
+  property :name, String, required: true
+  property :address, String, required: true
   property :latitude, Float, :writer => :private
   property :longitude, Float, :writer => :private
 
@@ -44,15 +44,14 @@ class Mapish < Sinatra::Base
 
   namespace '/api' do
     before do
-      @locations = []
+      @location = {}
       @errors = []
     end
 
     get('/?') { redirect to '/api/locations'}
 
     get '/locations/?' do
-      @locations = Location.all
-      respond
+      json Location.all
     end
 
     post '/locations' do
@@ -60,21 +59,22 @@ class Mapish < Sinatra::Base
       location = Location.new(name: data['name'], address: data['address'])
       if location.valid?
         location.save
+        @location = location.attributes
       else
         status 422
-        location.errors.map {|error| @errors << error }
+        location.errors.each_pair {|key, message| @errors << { key: key, message: message[0]} }
       end
-      @locations << location
       respond
     end
 
     get '/locations/:id' do
       location = Location.get params[:id]
-      unless location
+      if location
+        @location = location.attributes
+      else
         status 404
         @errors << RECORD_NOT_FOUND_MSG unless location
       end
-      @locations << location
       respond
     end
 
@@ -87,13 +87,13 @@ class Mapish < Sinatra::Base
           location.save
         else
           status 422
-          location.errors.map {|error| @errors << error }
+          location.errors.each_pair {|key, message| @errors << { key: key, message: message[0]} }
         end
+        @location = location.attributes
       else
         status 404
         @errors << RECORD_NOT_FOUND_MSG
       end
-      @locations << location
       respond
     end
 
@@ -117,6 +117,7 @@ class Mapish < Sinatra::Base
   end
 
   def respond
-    json({locations: @locations, errors: @errors})
+    response = @location.merge({ errors: @errors })
+    json response
   end
 end

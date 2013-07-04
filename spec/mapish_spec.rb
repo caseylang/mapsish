@@ -19,9 +19,9 @@ describe 'Mapish routes' do
     it 'returns all locations', :vcr do
       location
       response.should be_ok
-      response_body.keys.should include 'locations'
-      response_body['locations'].should be_a Array
-      response_body['locations'].length.should == 1
+      response_body.should be_a Array
+      response_body.length.should == 1
+      response_body[0]['name'].should match Locations.work[:name]
     end
   end
 
@@ -31,13 +31,14 @@ describe 'Mapish routes' do
       last_response.should be_ok
       Location.count.should > 0
       response_body['errors'].empty?.should be true
+
     end
 
     context 'with invalid data' do
       it 'returns errors' do
         post '/api/locations', Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
         last_response.status.should eq 422
-        response_body.empty?.should be false
+        response_body['errors'].empty?.should be false
       end
     end
   end
@@ -46,8 +47,8 @@ describe 'Mapish routes' do
     it 'returns the specified location', :vcr do
       get "/api/locations/#{location.id}"
       last_response.should be_ok
-      response_body['locations'][0]['name'].should match Locations.work[:name]
-      response_body['locations'][0]['longitude'].should eq Locations.work_coordinates[:longitude]
+      response_body['name'].should match Locations.work[:name]
+      response_body['longitude'].should eq Locations.work_coordinates[:longitude]
       response_body['errors'].empty?.should be true
     end
 
@@ -65,7 +66,7 @@ describe 'Mapish routes' do
       put "/api/locations/#{location.id}", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should == 1
-      response_body['locations'][0]['name'].should match Locations.home[:name]
+      response_body['name'].should match Locations.home[:name]
       response_body['errors'].empty?.should be true
     end
 
