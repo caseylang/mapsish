@@ -9,11 +9,11 @@ module Locations
     {name: 'Work', address: '800 Market St. San Francisco, CA 94102'}
   end
 
-  def work_cordinates
+  def work_coordinates
     {latitude: 37.7854699, longitude: -122.406616}
   end
 
-  def home_cordinates
+  def home_coordinates
     {latitude: 32.978299, longitude: -96.7515624}
   end
 

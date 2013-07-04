@@ -25,9 +25,9 @@ describe 'Mapish routes' do
     end
   end
 
-  describe 'put /api/locations' do
+  describe 'post /api/locations' do
     it 'creates a new location', :vcr do
-      put '/api/locations', Locations.work.to_json, "CONTENT_TYPE" => "application/json"
+      post '/api/locations', Locations.work.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should > 0
       response_body['errors'].empty?.should be true
@@ -35,7 +35,7 @@ describe 'Mapish routes' do
 
     context 'with invalid data' do
       it 'returns errors' do
-        put '/api/locations', Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
+        post '/api/locations', Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
         response_body.empty?.should be false
       end
     end
@@ -45,7 +45,8 @@ describe 'Mapish routes' do
     it 'returns the specified location', :vcr do
       get "/api/locations/#{location.id}"
       last_response.should be_ok
-      response_body['locations'][0]['name'].should match 'Work'
+      response_body['locations'][0]['name'].should match Locations.work[:name]
+      response_body['locations'][0]['longitude'].should eq Locations.work_coordinates[:longitude]
       response_body['errors'].empty?.should be true
     end
 
@@ -57,9 +58,9 @@ describe 'Mapish routes' do
     end
   end
 
-  describe 'post /api/locations/:id' do
+  describe 'put /api/locations/:id' do
     it 'updates an existing location', :vcr do
-      post "/api/locations/#{location.id}", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
+      put "/api/locations/#{location.id}", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
       last_response.should be_ok
       Location.count.should == 1
       response_body['locations'][0]['name'].should match Locations.home[:name]
@@ -68,14 +69,14 @@ describe 'Mapish routes' do
 
     context 'with an invalid id' do
       it 'returns an error' do
-        post "/api/locations/999", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
+        put "/api/locations/999", Locations.home.to_json, "CONTENT_TYPE" => "application/json"
         response_body['errors'].empty?.should be false
       end
     end
 
     context 'with invalid data' do
       it 'returns errors', :vcr do
-        post "/api/locations/#{location.id}", Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
+        put "/api/locations/#{location.id}", Locations.empty.to_json, "CONTENT_TYPE" => "application/json"
         response_body.empty?.should be false
       end
     end

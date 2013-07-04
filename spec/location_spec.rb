@@ -15,8 +15,8 @@ describe 'Location', :vcr => {cassette_name: 'Location/coordinates'} do
       describe 'responds to' do
         it('name') { location.name.should eq Locations.work[:name] }
         it('address') { location.address.should eq Locations.work[:address] }
-        it('latitude') { location.latitude.should eq Locations.work_cordinates[:latitude] }
-        it('longitude') { location.longitude.should eq Locations.work_cordinates[:longitude] }
+        it('latitude') { location.latitude.should eq Locations.work_coordinates[:latitude] }
+        it('longitude') { location.longitude.should eq Locations.work_coordinates[:longitude] }
       end
     end
 

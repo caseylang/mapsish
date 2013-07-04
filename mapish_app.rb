@@ -19,7 +19,7 @@ class Location
   property :longitude, Float, :writer => :private
 
   def geocode
-    @latitude, @longitude = Geocoder.coordinates @address
+    self.latitude, self.longitude = Geocoder.coordinates @address
   end
 end
 
@@ -55,7 +55,7 @@ class Mapish < Sinatra::Base
       respond
     end
 
-    put '/locations' do
+    post '/locations' do
       data = grab_data
       location = Location.new(name: data['name'], address: data['address'])
       if location.valid?
@@ -74,7 +74,7 @@ class Mapish < Sinatra::Base
       respond
     end
 
-    post '/locations/:id' do
+    put '/locations/:id' do
       data = grab_data
       location = Location.get params[:id]
       if location
