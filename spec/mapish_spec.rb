@@ -5,15 +5,6 @@ describe 'Mapish routes' do
   let(:location) { Location.create(Locations.work) }
   let(:response_body) { JSON.parse(last_response.body) }
 
-  # todo: nuke this once things are really up and running
-  describe 'get /' do
-    it 'should display the index' do
-      get '/'
-      last_response.should be_ok
-      last_response.body.should match 'howdy!'
-    end
-  end
-
   describe 'get /api/locations' do
     let(:response) do
       get '/api/locations'
