@@ -1,4 +1,4 @@
-<input id="ac-<%= location.get('id') %>" name="accordion" type="radio"/>
+<input id="ac-<%= location.get('id') %>" name="accordion" type="radio" checked/>
 <label for="ac-<%= location.get('id')%>">
   <form>
     <div class="row collapse">

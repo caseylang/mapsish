@@ -16,7 +16,13 @@
 
     Location.prototype.events = {
       'submit #new_location': 'createLocation',
-      'click a.delete': 'deleteLocation'
+      'click a.delete': 'deleteLocation',
+      'change input[name=\'name\']': 'updateName',
+      'change input[name=\'address\']': 'updateAddress'
+    };
+
+    Location.prototype.initialize = function() {
+      return this.model.on('change:address', this.render, this);
     };
 
     Location.prototype.render = function() {
@@ -26,7 +32,28 @@
       return this;
     };
 
-    Location.prototype.deleteLocation = function() {
+    Location.prototype.updateName = function(event) {
+      var value;
+      event.preventDefault();
+      value = event.target.value;
+      this.model.set({
+        'name': value
+      });
+      return this.model.save();
+    };
+
+    Location.prototype.updateAddress = function(event) {
+      var value;
+      event.preventDefault();
+      value = event.target.value;
+      return this.model.save({
+        'address': value
+      }, {
+        wait: true
+      });
+    };
+
+    Location.prototype.deleteLocation = function(event) {
       event.preventDefault();
       $('#ac-' + this.model.get('id')).parent().remove();
       return this.model.destroy();
