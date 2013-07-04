@@ -12,6 +12,12 @@
       return _ref;
     }
 
+    Locations.prototype.url = '/api/locations';
+
+    Locations.prototype.parse = function(response) {
+      return response.locations;
+    };
+
     return Locations;
 
   })(Backbone.Collection);

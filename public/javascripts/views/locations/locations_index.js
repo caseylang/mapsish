@@ -14,9 +14,27 @@
 
     LocationsIndex.prototype.template = JST['locations/index'];
 
+    LocationsIndex.prototype.events = {
+      'submit #new_location': 'createLocation'
+    };
+
+    LocationsIndex.prototype.initialize = function() {
+      return this.collection.on('reset', this.render, this);
+    };
+
     LocationsIndex.prototype.render = function() {
-      $(this.el).html(this.template());
+      $(this.el).html(this.template({
+        locations: this.collection.toJSON()
+      }));
       return this;
+    };
+
+    LocationsIndex.prototype.createLocation = function(event) {
+      event.preventDefault();
+      return this.collection.create({
+        name: $('#new_location_name').val(),
+        address: $('#new_location_address').val()
+      });
     };
 
     return LocationsIndex;

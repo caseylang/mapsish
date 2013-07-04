@@ -17,9 +17,18 @@
       'locations/:id': 'show'
     };
 
+    Locations.prototype.initialize = function() {
+      this.collection = new Mapish.Collections.Locations();
+      return this.collection.fetch({
+        reset: true
+      });
+    };
+
     Locations.prototype.index = function() {
       var view;
-      view = new Mapish.Views.LocationsIndex();
+      view = new Mapish.Views.LocationsIndex({
+        collection: this.collection
+      });
       return $('#container').html(view.render().el);
     };
 
