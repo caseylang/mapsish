@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '1.9.3'
 
 # Required by the app directly
 gem 'sinatra', require: false
