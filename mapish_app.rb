@@ -5,7 +5,6 @@ require 'sinatra/namespace'
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/development.sqlite3")
 DataMapper::Model.raise_on_save_failure = true
 
-
 class Location
   include DataMapper::Resource
 
