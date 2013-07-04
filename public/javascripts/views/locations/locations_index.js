@@ -19,22 +19,38 @@
     };
 
     LocationsIndex.prototype.initialize = function() {
-      return this.collection.on('reset', this.render, this);
+      this.collection.on('reset', this.render, this);
+      return this.collection.on('add', this.appendLocation, this);
     };
 
     LocationsIndex.prototype.render = function() {
-      $(this.el).html(this.template({
-        locations: this.collection.toJSON()
-      }));
+      $(this.el).html(this.template());
+      this.collection.each(this.appendLocation);
       return this;
+    };
+
+    LocationsIndex.prototype.appendLocation = function(location) {
+      var view;
+      if (location.isNew()) {
+        location = location.get('locations')[0];
+      } else {
+        location = location.toJSON();
+      }
+      view = new Mapish.Views.Location({
+        model: location
+      });
+      return $('#locations').append(view.render().el);
     };
 
     LocationsIndex.prototype.createLocation = function(event) {
       event.preventDefault();
-      return this.collection.create({
+      this.collection.create({
         name: $('#new_location_name').val(),
         address: $('#new_location_address').val()
+      }, {
+        wait: true
       });
+      return $('#new_location')[0].reset();
     };
 
     return LocationsIndex;

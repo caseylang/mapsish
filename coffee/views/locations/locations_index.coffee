@@ -7,11 +7,22 @@ class Mapish.Views.LocationsIndex extends Backbone.View
 
   initialize: ->
     @collection.on('reset', @render, this)
+    @collection.on('add', @appendLocation, this)
 
   render: ->
-    $(@el).html(@template(locations: @collection.toJSON()))
+    $(@el).html(@template())
+    @collection.each(@appendLocation)
     this
+
+  appendLocation: (location) ->
+    if location.isNew()
+      location = location.get('locations')[0]
+    else
+      location = location.toJSON()
+    view = new Mapish.Views.Location(model: location)
+    $('#locations').append(view.render().el)
 
   createLocation: (event) ->
     event.preventDefault()
-    @collection.create({name: $('#new_location_name').val(), address: $('#new_location_address').val()})
+    @collection.create({name: $('#new_location_name').val(), address: $('#new_location_address').val()}, {wait: true})
+    $('#new_location')[0].reset()
